@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Author's Books</title>
+    <!-- Add any necessary styles or links to stylesheets -->
+    <style>
+        body {
+            margin: 0;
+            padding-top: 20px;
+            display: flex;
+            /* justify-content: center; */
+            flex-direction: column;
+            align-items: center;
+        }
+        #authorBooks {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* width: 80%; */
+        }
+        .book {
+            display: flex;
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            align-items: top;
+            justify-content: start;
+        }
+        .book img {
+            width: 300px; 
+            height: auto; 
+            margin-right: 40px;
+        }
+        .book-details {
+            display: flex;
+            flex-direction: column;
+            /* justify-content: flex-start; */
+            text-align: left;
+            /* font-size: 1em; */
+        }
+    </style>
+</head>
+<body>
+    <h1 id="authorName"></h1> <!-- The author's name will be set dynamically -->
+    <div id="authorBooks"></div>
+
+    <script>
+        function getAuthorNameFromUrl() {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('authorName');
+        }
+
+        function fetchBooksByAuthor() {
+            var authorName = getAuthorNameFromUrl();
+            document.getElementById('authorName').textContent = `Books by ${authorName}`;
+            fetch(`/author/${authorName}`)
+                .then(response => response.json()) // Assuming the response is in JSON format
+                .then(data => {
+                    var booksHtml = data.books.map(book => `
+                        <div class="book">
+                            <img src="${book.imageUrl}" alt="Cover of ${book.title}">
+                            <div class="book-details">
+                                <h1><a href="book.html?bookId=${book.id}">${book.title}</a></h1>
+                                <h2>Author: ${book.author}</h2>
+                                <h2>Year: ${book.year}</h2>
+                                <h2>Average Rating: ${book.averageRating}</h2>
+                            </div>
+                        </div>
+                    `).join('');
+                    document.getElementById('authorBooks').innerHTML = booksHtml;
+                });
+        }
+
+        window.onload = fetchBooksByAuthor;
+    </script>
+</body>
+</html>

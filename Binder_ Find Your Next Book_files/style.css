@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+#books-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  gap: 15px;
+  margin-top: 15px;
+  width: 80%;
+  max-width: 1200px; /* Adjust based on your design preference */
+}
+  
+.book {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+}
+
+#searchInput {
+  height: 30px;
+  width: 500px; /* or any other length */
+  padding: 10px;
+  margin-right: 5px;
+  font-size: 1em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.module {
+  width: 90%;
+  max-width: 1600px;
+  margin: 10px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start; /* Align items at the top of the container */
+}
+
+.module h2 {
+  font-size: 2em;
+  width: 100%; /* Make sure the header spans the full width of the module */
+  margin-bottom: 10px;
+}
+
+.item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 5px;
+  background-color: #f8f9fa;
+  flex: 0 1 18%; /* Each item can flex but starts at 18% width */
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+  text-align: center; /* Center the text inside each item */
+}
+
+/* Small screen / mobile view adjustments */
+@media (max-width: 600px) {
+  .item {
+    flex: 0 1 46%; /* On smaller screens, make items take roughly half the container's width */
+  }
+  .module {
+    flex-direction: column;
+    align-items: center;
+  }
+  .module h2 {
+    text-align: center;
+  }
+}
+
+
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Details</title>
+    <!-- Add any required CSS or other head elements here -->
+    <style>
+        body {
+            margin: 0;
+            padding-top: 20px; /* Adjust the padding to suit the spacing you want from the top */
+            display: flex;
+            justify-content: center;
+        }
+        #container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
+        #bookCover {
+            margin-right: 20px;
+        }
+        #bookDetails {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="bookCover">
+            <!-- Book cover image will be displayed here -->
+        </div>
+        <div id="bookDetails">
+            <!-- Book details will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        function getBookIdFromUrl() {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('bookId');
+        }
+
+        function fetchBookDetails() {
+            var bookId = getBookIdFromUrl();
+            fetch(`/book/${bookId}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayBookDetails(data);
+                });
+        }
+        
+        function displayBookDetails(book) {
+            var coverHtml = `<figure><img src="${book.imageUrl}" alt="${book.title} cover"></figure>`;
+            var detailsHtml = `<h1>${book.title}</h1>
+                               <h3>Author: ${book.author}</h3>
+                               <h3>Rating: ${book.averageRating}</h3>
+                               <h3>Year: ${book.year}</h3>
+                               <h3>Publisher: ${book.publisher}</h3>
+                               <h3>ISBN: ${book.id}</h3>`
+                               ;
+
+            document.getElementById('bookCover').innerHTML = coverHtml;
+            document.getElementById('bookDetails').innerHTML = detailsHtml;
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchBookDetails);
+    </script>
+</body>
+</html>

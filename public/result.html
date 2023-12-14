@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <style>
+        body {
+            font-size: 30px;
+        }
+        #matchedAuthors {
+            margin-bottom: 50px;
+        }
+        #matchedBooks {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <div id="matchedAuthors">
+        <!-- Matched authors will be listed here -->
+    </div>
+    <div id="matchedBooks">
+        <!-- Matched books will be listed here -->
+    </div>
+
+    <script>
+        // Extract query from URL
+        const queryParams = new URLSearchParams(window.location.search);
+        const query = queryParams.get('query');
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelector('h1').textContent = 'Search Results of ' + query;
+        });
+
+        // Fetch results from the server
+        fetch(`/search/${query}`)
+            .then(response => response.json())
+            .then(data => {
+                const authorsDiv = document.getElementById('matchedAuthors');
+                const booksDiv = document.getElementById('matchedBooks');
+
+                // Display matched authors
+                data.authors.forEach(author => {
+                    const authorElement = document.createElement('div');
+                    const authorLink = document.createElement('a');
+                    // console.log(author.author)
+                    authorLink.href = `author.html?authorName=${author.author}`;
+                    authorLink.textContent = author.author;
+                    authorElement.appendChild(authorLink);
+                    authorsDiv.appendChild(authorElement);
+                });
+
+                // Display matched books
+                data.books.forEach(book => {
+                    const bookElement = document.createElement('div');
+                    const bookLink = document.createElement('a');
+                    bookLink.href = `book.html?bookId=${book.id}`;
+                    bookLink.textContent = `${book.title} by ${book.author}`;
+                    bookElement.appendChild(bookLink);
+                    booksDiv.appendChild(bookElement);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
+
+
+
