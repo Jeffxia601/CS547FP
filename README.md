@@ -7,7 +7,7 @@ NodeJS v21.4.0
 1. Open your terminal.
 2. Navigate to the project directory:
    ```
-   cd CS547WebApp
+   cd CS547FP
    ```
 3. Install the necessary packages:
    ```
